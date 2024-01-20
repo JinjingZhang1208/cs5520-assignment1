@@ -1,18 +1,39 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import React from 'react'
+import Checkbox from 'expo-checkbox';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 export default function CheckBox({title, onToggle}) {
-  const [isChecked, setCheckboxChecked] = useState(false)
-  const handleToggle = () => {
-    setCheckboxChecked(!isChecked);
-    onToggle && onToggle(!isChecked);
+  const [isChecked, setChecked] = useState(false);
+
+  const handleToggle = () => {  
+    setChecked(!isChecked)
+    onToggle && onToggle(!isChecked)
   }
+
   return (
-    <TouchableOpacity onPress={handleToggle}>
-      <Text style={isChecked ? styles.checkedText : styles.text}>{title}</Text>
-    </TouchableOpacity>
-  )
-  ;
+    <View style={styles.container}>
+      <View style={styles.section}>
+        <Checkbox style={styles.checkbox} value={isChecked} onValueChange={handleToggle} />
+        <Text style={styles.paragraph}>{title}</Text>
+      </View>
+    </View>
+  );
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginHorizontal: 16,
+    marginVertical: 32,
+  },
+  section: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  paragraph: {
+    fontSize: 15,
+  },
+  checkbox: {
+    margin: 8,
+  },
+});
