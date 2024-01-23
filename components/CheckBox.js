@@ -1,19 +1,16 @@
 import Checkbox from 'expo-checkbox';
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function CheckBox({title, onToggle}) {
-  const [isChecked, setChecked] = useState(false);
-
-  const handleToggle = () => {  
-    setChecked(!isChecked)
-    onToggle && onToggle(!isChecked)
-  }
+export default function CheckBox({ title, onToggle, value }) {
+  const handleToggle = () => {
+    onToggle && onToggle(!value);
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.section}>
-        <Checkbox style={styles.checkbox} value={isChecked} onValueChange={handleToggle} />
+        <Checkbox style={styles.checkbox} value={value} onValueChange={handleToggle} />
         <Text style={styles.paragraph}>{title}</Text>
       </View>
     </View>

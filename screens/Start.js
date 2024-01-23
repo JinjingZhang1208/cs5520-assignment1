@@ -10,17 +10,12 @@ export default function Start() {
   const [checkboxChecked, setCheckboxChecked] = useState(false)
 
   const nameHandler = (inputName) => {
-    if (inputName.length > 1 && /^[a-zA-Z]+$/.test(inputName)) {
       setName(inputName)
-    }
   }
 
   const numberHandler = (inputNumber) => {
-    const number = parseInt(inputNumber)
-    if (number !== NaN && number >= 1020 && number <=1029) {
-      setNumber(number.toString())
+    setNumber(inputNumber)
     }
-  }
 
   const checkboxHandler = (isChecked) => {
     setCheckboxChecked(isChecked)
@@ -40,13 +35,15 @@ export default function Start() {
         <TextInput 
           onChangeText={nameHandler}
           style={styles.input}
+          value={name}
         ></TextInput>
         <Text>Number</Text>
         <TextInput 
           onChangeText={numberHandler}
           style={styles.input}
+          value={number}
         ></TextInput>
-        <CheckBox title='I am not a robot' onToggle={checkboxHandler}></CheckBox>
+        <CheckBox title='I am not a robot' onToggle={checkboxHandler} value={checkboxChecked}></CheckBox>
         <Button title="Reset" onPress={handleReset} />
       </Card>
     </View>
