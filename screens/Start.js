@@ -3,18 +3,23 @@ import React, {useState} from 'react'
 import Button from '../components/Button'
 import Card from '../components/Card'
 import CheckBox from '../components/CheckBox'
+import Game from './Game'
 
-export default function Start() {
+export default function Start({handleScreenChange}) {
   const [name, setName] = useState('')
   const [number, setNumber] = useState('')
   const [checkboxChecked, setCheckboxChecked] = useState(false)
+  const [nameError, setNameError] = useState('')
+  const [numberError, setNumberError] = useState('')
 
   const nameHandler = (inputName) => {
-      setName(inputName)
+    setName(inputName)
+    setNameError('')
   }
 
   const numberHandler = (inputNumber) => {
     setNumber(inputNumber)
+    setNumberError('')
     }
 
   const checkboxHandler = (isChecked) => {
@@ -25,6 +30,28 @@ export default function Start() {
     setName('');
     setNumber('');
     setCheckboxChecked(false);
+    setNameError('');
+    setNumberError('');
+  }
+
+  const handleConfirm = () => {
+    if (name.length <= 1 || !isNaN(name)) {
+      setNameError('Please enter a valid name');
+      return;
+    } 
+
+    const parsedNumber = parseInt(number);
+    if (isNaN(parsedNumber) || parsedNumber < 1020 || parsedNumber > 1029 || number.length > 4) {
+      setNumberError('Please enter a valid number between 1020 and 1029');
+      return;
+    }
+
+    if (!checkboxChecked) {
+      setNumberError('Please click the checkbox');
+      return;
+    } 
+
+    handleScreenChange('Game');
   }
 
   return (
@@ -36,15 +63,18 @@ export default function Start() {
           onChangeText={nameHandler}
           style={styles.input}
           value={name}
-        ></TextInput>
+        />{nameError ? <Text>{nameError}</Text> : null}
         <Text>Number</Text>
         <TextInput 
           onChangeText={numberHandler}
           style={styles.input}
           value={number}
-        ></TextInput>
+        />{numberError ? <Text>{numberError}</Text> : null}
         <CheckBox title='I am not a robot' onToggle={checkboxHandler} value={checkboxChecked}></CheckBox>
-        <Button title="Reset" onPress={handleReset} />
+        <View style={styles.buttonContainer}>
+          <Button title="Reset" onPress={handleReset} />
+          <Button title="Confirm" onPress={handleConfirm} />
+        </View>
       </Card>
     </View>
   )
@@ -64,4 +94,9 @@ const styles = StyleSheet.create({
     width: "80%",
     margin: 15,
   },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '50%',
+  }
 })
