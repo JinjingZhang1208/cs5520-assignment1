@@ -1,27 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Start from './screens/Start';
-import Game from './screens/Game';
-import React, {useState} from 'react'
-import Finish from './screens/Finish';
+import React from 'react'
 import Colors from './Colors';
+import GradientBackground from './components/GradientBackground';
 
 export default function App() {
-  const [currentScreen, setCurrentScreen] = useState('start')
-  const restartGame = () => { 
-    setCurrentScreen('start')
-  }
-
-  const startGame = () => {
-    setCurrentScreen('start')
-  }
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      {currentScreen === 'start' && <Start startGame={startGame} />}
-      {currentScreen === 'finish' && <Finish restartGame={restartGame} />}
-    </View>
+      <GradientBackground>
+        <View style={styles.container}>
+          <StatusBar style="auto" />
+          <Start/>
+        </View>
+      </GradientBackground>
   );
 }
 

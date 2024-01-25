@@ -5,6 +5,7 @@ import Card from '../components/Card';
 import CheckBox from '../components/CheckBox';
 import Game from './Game';
 import Colors from '../Colors'
+import GradientBackground from '../components/GradientBackground';
 
 export default function Start() {
   const [name, setName] = useState('');
@@ -54,7 +55,6 @@ export default function Start() {
       setNumberError('Please click the checkbox');
       return;
     }
-
     handleGameStart();
   };
 
@@ -91,33 +91,33 @@ export default function Start() {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Guess My Number</Text>
-      <Card>
-        <Text style={styles.word}>Name</Text>
-        <TextInput onChangeText={nameHandler} style={styles.input} value={name} />
-        {nameError ? <Text>{nameError}</Text> : null}
-        <Text style={styles.word}>Number</Text>
-        <TextInput onChangeText={numberHandler} style={styles.input} value={number} />
-        {numberError ? <Text>{numberError}</Text> : null}
-        <CheckBox title="I am not a robot" onToggle={checkboxHandler} value={checkboxChecked}></CheckBox>
-        <View style={styles.buttonContainer}>
-          <Button title="Reset" onPress={handleReset} />
-          <Button title="Confirm" onPress={handleConfirm} />
-        </View>
-      </Card>
-      {modalVisible && (
-        <Game
-          name={name}
-          number={number}
-          modalVisible={modalVisible}
-          closeModal={handleGameEnd}
-          attempts={attempts}
-          randomNumber={randomNumber}
-          onRestartGame={handleRestartGame} 
-        />
-      )}
-    </View>
+    <GradientBackground>
+        <Text style={styles.title}>Guess My Number</Text>
+        <Card>
+          <Text style={styles.word}>Name</Text>
+          <TextInput onChangeText={nameHandler} style={styles.input} value={name} />
+          {nameError ? <Text>{nameError}</Text> : null}
+          <Text style={styles.word}>Number</Text>
+          <TextInput onChangeText={numberHandler} style={styles.input} value={number} />
+          {numberError ? <Text>{numberError}</Text> : null}
+          <CheckBox title="I am not a robot" onToggle={checkboxHandler} value={checkboxChecked}></CheckBox>
+          <View style={styles.buttonContainer}>
+            <Button title="Reset" onPress={handleReset} />
+            <Button title="Confirm" onPress={handleConfirm} />
+          </View>
+        </Card>
+        {modalVisible && (
+          <Game
+            name={name}
+            number={number}
+            modalVisible={modalVisible}
+            closeModal={handleGameEnd}
+            attempts={attempts}
+            randomNumber={randomNumber}
+            onRestartGame={handleRestartGame} 
+          />
+        )}
+    </GradientBackground>
   );
 }
 

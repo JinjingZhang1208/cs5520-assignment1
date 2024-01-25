@@ -1,6 +1,7 @@
 const Colors = {
-    background: '#FF33FB',
-    card: '#C0C0C0',
+    background: '#CCCCFF',
+    card: '#F4FAF3',
+    text: '#900C3F',
   };
   
   export default Colors;

@@ -4,10 +4,12 @@ import Card from '../components/Card';
 import Button from '../components/Button';
 import Finish from './Finish';
 import Colors from '../Colors';
+import GradientBackground from '../components/GradientBackground';
 
 export default function Game({ name, number, attempts, randomNumber, modalVisible, closeModal, onRestartGame }) {
   const [resultText, setResultText] = useState('');
   const [gameFinished, setGameFinished] = useState(false);
+  const [showThankYouButton, setShowThankYouButton] = useState(false);
 
   const checkChance = () => {
     if (attempts === 0) {
@@ -17,7 +19,8 @@ export default function Game({ name, number, attempts, randomNumber, modalVisibl
 
   const verifyNumber = () => {
     if (parseInt(number) === randomNumber) {
-      setResultText(`Congrats, ${name}! You won!`);
+      setResultText(`Congrats, ${name}!\n You won!`);
+      setShowThankYouButton(true);
     } else {
       checkChance();
       giveHint();
@@ -25,7 +28,7 @@ export default function Game({ name, number, attempts, randomNumber, modalVisibl
   };
 
   const giveHint = () => {  
-    console.log(randomNumber);
+    // console.log('randomNumber', randomNumber);
     if (number < randomNumber) {
       setResultText(`Hello ${name}.\nYou have chosen ${number}.\nThat is not my number!\nGuess higher! \nYou have ${attempts} attempts left!`);
     } else {
@@ -34,9 +37,9 @@ export default function Game({ name, number, attempts, randomNumber, modalVisibl
   };
 
   const guessAgain = () => {
-  if (!gameFinished) {
-    setResultText('');
-    closeModal();
+    if (!gameFinished) {
+      setResultText('');
+      closeModal();
     }
   }
 
@@ -50,25 +53,32 @@ export default function Game({ name, number, attempts, randomNumber, modalVisibl
 
   return (
     <Modal visible={modalVisible}>
-      <View style={styles.container}>
-      {gameFinished ? (
-          <Finish success={parseInt(number) === randomNumber} number={number} onRestartGame={onRestartGame}  />
+      <GradientBackground>
+        {gameFinished ? (
+          <Finish success={parseInt(number) === randomNumber} number={number} onRestartGame={onRestartGame} />
         ) : (
-        <Card>
-          <Text style={styles.hint}>{resultText}</Text>
-          {attempts > 0 ? (
-          <View style={styles.buttonContainer}>
-            <Button title="Let Me Guess Again" onPress={guessAgain}/>
-            <Button title="I am done" onPress={handleFinishGame} />
-          </View>
-        ) : (
-          <View style={styles.buttonContainer}>
-            <Button style={styles.singleButton} title="I am done" onPress={handleFinishGame} />
-          </View>
+          <Card>
+            <Text style={styles.hint}>{resultText}</Text>
+            {attempts > 0 && !showThankYouButton && (
+              <View style={styles.buttonContainer}>
+                <Button title="Let Me Guess Again" onPress={guessAgain} />
+                <Button title="I am done" onPress={handleFinishGame} />
+              </View>
+            )}
+            {showThankYouButton && (
+              <View style={styles.buttonContainer}>
+                <Button title="Thank You" onPress={handleFinishGame} />
+              </View>
+            )}
+            {attempts === 0 && (
+              <View style={styles.buttonContainer}>
+                <Button title="I am done" onPress={handleFinishGame} />
+              </View>
+            )}
+          </Card>
         )}
-        </Card>
-        )}
-      </View>
+
+      </GradientBackground>
     </Modal>
   );
 }
@@ -95,9 +105,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     textAlign: 'center',
     lineHeight: 24,
+    color: Colors.text,
   },
-  singleButton: {
-    width: '100%',
-    justifyContent: 'center',
-  }
 });
