@@ -5,17 +5,12 @@ import Game from './screens/Game';
 import React, {useState} from 'react'
 
 export default function App() {
-  const [currentScreen, setCurrentScreen] = useState('Start')
-
-  const handleScreenChange = (screen) => {  
-    setCurrentScreen(screen)
-  }
-
+  
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      {currentScreen === 'Start' && <Start handleScreenChange={handleScreenChange} />}
-      {currentScreen === 'Game' && <Game handleScreenChange={handleScreenChange} />}
+      <Start />
+    
     </View>
   );
 }

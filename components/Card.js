@@ -11,7 +11,7 @@ export default function Card({children}) {
 
 const styles = StyleSheet.create({
     card: {
-      borderRadius: 6,
+      borderRadius: 8,
       backgroundColor: 'grey',
       height: 500,
       width: 300,
