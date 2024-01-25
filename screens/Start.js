@@ -40,7 +40,9 @@ export default function Start() {
   };
 
   const handleConfirm = () => {
-    if (name.length <= 1 || !isNaN(name)) {
+    const isNameValid = /^[A-Za-z]+$/.test(name);
+
+    if (name.length <= 1 || !isNameValid) {
       setNameError('Please enter a valid name');
       return;
     }

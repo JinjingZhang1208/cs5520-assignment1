@@ -28,7 +28,6 @@ export default function Game({ name, number, attempts, randomNumber, modalVisibl
   };
 
   const giveHint = () => {  
-    // console.log('randomNumber', randomNumber);
     if (number < randomNumber) {
       setResultText(`Hello ${name}.\nYou have chosen ${number}.\nThat is not my number!\nGuess higher! \nYou have ${attempts} attempts left!`);
     } else {
@@ -70,7 +69,7 @@ export default function Game({ name, number, attempts, randomNumber, modalVisibl
                 <Button title="Thank You" onPress={handleFinishGame} />
               </View>
             )}
-            {attempts === 0 && (
+            {attempts === 0 && !showThankYouButton && (
               <View style={styles.buttonContainer}>
                 <Button title="I am done" onPress={handleFinishGame} />
               </View>
