@@ -4,6 +4,7 @@ import Button from '../components/Button';
 import Card from '../components/Card';
 import CheckBox from '../components/CheckBox';
 import Game from './Game';
+import Colors from '../Colors'
 
 export default function Start() {
   const [name, setName] = useState('');
@@ -64,7 +65,6 @@ export default function Start() {
     }
     setModalVisible(true);
   };
-  
 
   const handleGameEnd = () => {
     setModalVisible(false);
@@ -77,19 +77,27 @@ export default function Start() {
     setRandomNumber(randomNumber);
   };
 
+  const handleRestartGame = () => {
+    setName('');
+    setNumber('');
+    setCheckboxChecked(false);
+    setAttempts(3);
+    generateRandomNumber();
+    setModalVisible(false);
+  };
 
   useEffect(() => {
     generateRandomNumber();
   }, []);
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.title}>Guess My Number</Text>
       <Card>
-        <Text>Name</Text>
+        <Text style={styles.word}>Name</Text>
         <TextInput onChangeText={nameHandler} style={styles.input} value={name} />
         {nameError ? <Text>{nameError}</Text> : null}
-        <Text>Number</Text>
+        <Text style={styles.word}>Number</Text>
         <TextInput onChangeText={numberHandler} style={styles.input} value={number} />
         {numberError ? <Text>{numberError}</Text> : null}
         <CheckBox title="I am not a robot" onToggle={checkboxHandler} value={checkboxChecked}></CheckBox>
@@ -106,6 +114,7 @@ export default function Start() {
           closeModal={handleGameEnd}
           attempts={attempts}
           randomNumber={randomNumber}
+          onRestartGame={handleRestartGame} 
         />
       )}
     </View>
@@ -125,10 +134,21 @@ const styles = StyleSheet.create({
     borderBottomColor: 'purple',
     width: '80%',
     margin: 15,
+    marginTop: 15,
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '50%',
   },
+  container: {
+    flex: 1,
+    backgroundColor: Colors.background,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  word: {
+    marginTop: 30,
+    textAlign: 'left',
+  }
 });
