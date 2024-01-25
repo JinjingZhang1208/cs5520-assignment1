@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-export default function Finish() {
+export default function Image() {
   return (
     <View>
-      <Text>Finish</Text>
+      <Text>Image</Text>
     </View>
   )
 }

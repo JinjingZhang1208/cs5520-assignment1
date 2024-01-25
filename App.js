@@ -5,7 +5,7 @@ import Game from './screens/Game';
 import React, {useState} from 'react'
 
 export default function App() {
-  
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />

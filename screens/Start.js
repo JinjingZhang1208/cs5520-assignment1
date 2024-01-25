@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import Button from '../components/Button';
 import Card from '../components/Card';
@@ -12,6 +12,8 @@ export default function Start() {
   const [nameError, setNameError] = useState('');
   const [numberError, setNumberError] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const [attempts, setAttempts] = useState(3);
+  const [randomNumber, setRandomNumber] = useState(0);
 
   const nameHandler = (inputName) => {
     setName(inputName);
@@ -56,12 +58,29 @@ export default function Start() {
   };
 
   const handleGameStart = () => {
+    if (attempts > 0) {
+      setAttempts(attempts - 1);
+      setCheckboxChecked(false);
+    }
     setModalVisible(true);
   };
+  
 
   const handleGameEnd = () => {
     setModalVisible(false);
   };
+
+  const generateRandomNumber = () => {
+    const minNumber = 1020;
+    const maxNumber = 1029;
+    const randomNumber = Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;
+    setRandomNumber(randomNumber);
+  };
+
+
+  useEffect(() => {
+    generateRandomNumber();
+  }, []);
 
   return (
     <View>
@@ -85,6 +104,8 @@ export default function Start() {
           number={number}
           modalVisible={modalVisible}
           closeModal={handleGameEnd}
+          attempts={attempts}
+          randomNumber={randomNumber}
         />
       )}
     </View>
