@@ -1,19 +1,26 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import Start from './screens/Start';
+import React from 'react'
+import Colors from './Colors';
+import GradientBackground from './components/GradientBackground';
 
 export default function App() {
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+      <GradientBackground>
+        <View style={styles.container}>
+          <StatusBar style="auto" />
+          <Start/>
+        </View>
+      </GradientBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
     alignItems: 'center',
     justifyContent: 'center',
   },
